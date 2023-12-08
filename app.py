@@ -18,9 +18,16 @@ else:
 scheduler = DDIMScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", clip_sample=False, set_alpha_to_one=False)
 pipeline = StableDiffusionXLPipeline.from_pretrained( "stabilityai/stable-diffusion-xl-base-1.0", torch_dtype=torch.float16, variant="fp16", use_safetensors=True, scheduler=scheduler).to(device)
 print(f"device = {device}")
-def run(image, src_style, src_prompt, prompts, shared_score_shift, shared_score_scale, guidance_scale, num_inference_steps, seed):
+def run(image, src_style, src_prompt, prompts, shared_score_shift, shared_score_scale, guidance_scale, num_inference_steps, large, seed):
+  print(f"run {image}")
   prompts = prompts.splitlines()
-  image = image.resize((1024, 1024))
+  if large:
+    dim = 1024
+    d = 128
+  else:
+    dim = 512
+    d = 64
+  image = image.resize((dim, dim))
   x0 = np.array(image)
   zts = inversion.ddim_inversion(pipeline, x0, src_prompt, num_inference_steps, 2)
   prompts.insert(0, src_prompt)
@@ -45,7 +52,7 @@ def run(image, src_style, src_prompt, prompts, shared_score_shift, shared_score_
   g_cpu = torch.Generator(device='cpu')
   g_cpu.manual_seed(seed)
 
-  latents = torch.randn(len(prompts), 4, 128, 128, device='cpu', generator=g_cpu, dtype=pipeline.unet.dtype,).to(device)
+  latents = torch.randn(len(prompts), 4, d, d, device='cpu', generator=g_cpu, dtype=pipeline.unet.dtype,).to(device)
   latents[0] = zT
   images_a = pipeline(prompts, latents=latents, callback_on_step_end=inversion_callback, num_inference_steps=num_inference_steps, guidance_scale=guidance_scale).images
   handler.remove()
@@ -62,6 +69,7 @@ demo = gr.Interface(
     gr.Number(1.0, label="shared_score_scale"),
     gr.Number(10.0, label="guidance_scale"),
     gr.Number(50, label="num_inference_steps", precision=0),
+    gr.Checkbox(False, label="Large (1024x1024)"),
     gr.Number(10, label="seed", precision=0)
   ],
   outputs=gr.Gallery()

@@ -3,6 +3,6 @@ transformers
 mediapy
 ipywidgets
 einops
-gradio==4.0.0
+gradio==3.50.2
 accelerate
 pillow
