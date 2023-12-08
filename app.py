@@ -50,7 +50,7 @@ def run(image, src_style, src_prompt, prompts, shared_score_shift, shared_score_
 
   zT, inversion_callback = inversion.make_inversion_callback(zts, offset=5)
   g_cpu = torch.Generator(device='cpu')
-  if seed > 0
+  if seed > 0:
     g_cpu.manual_seed(seed)
 
   latents = torch.randn(len(prompts), 4, d, d, device='cpu', generator=g_cpu, dtype=pipeline.unet.dtype,).to(device)
@@ -66,7 +66,7 @@ demo = gr.Interface(
     gr.Textbox(label="Describe the reference style"),
     gr.Textbox(label="Describe the reference image"),
     gr.Textbox(label="Prompts to generate images (separate with new lines)", lines=10),
-    gr.Number(2, label="shared_score_shift", precision=0),
+    gr.Number(1.1, label="shared_score_shift"),
     gr.Number(1.0, label="shared_score_scale"),
     gr.Number(10.0, label="guidance_scale"),
     gr.Number(50, label="num_inference_steps", precision=0),
