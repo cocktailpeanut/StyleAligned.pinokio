@@ -7,10 +7,12 @@ import gradio as gr
 import inversion
 import numpy as np
 
+dim = 128
 if torch.cuda.is_available():
   device = "cuda"
 elif torch.backends.mps.is_available():
   device = "mps"
+  dim = 64
 else:
   device = "cpu"
 scheduler = DDIMScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", clip_sample=False, set_alpha_to_one=False)
@@ -44,8 +46,9 @@ def run(image, src_style, src_prompt, prompts, shared_score_shift, shared_score_
   zT, inversion_callback = inversion.make_inversion_callback(zts, offset=5)
   g_cpu = torch.Generator(device='cpu')
   g_cpu.manual_seed(seed)
+
   #latents = torch.randn(len(prompts), 4, 128, 128, device='cpu', generator=g_cpu, dtype=pipeline.unet.dtype,).to(device)
-  latents = torch.randn(len(prompts), 4, 64, 64, device='cpu', generator=g_cpu, dtype=pipeline.unet.dtype,).to(device)
+  latents = torch.randn(len(prompts), 4, dim, dim, device='cpu', generator=g_cpu, dtype=pipeline.unet.dtype,).to(device)
   latents[0] = zT
   images_a = pipeline(prompts, latents=latents, callback_on_step_end=inversion_callback, num_inference_steps=num_inference_steps, guidance_scale=guidance_scale).images
   handler.remove()
