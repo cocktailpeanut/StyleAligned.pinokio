@@ -61,11 +61,11 @@ demo = gr.Interface(
     gr.Textbox(label="Describe the reference style"),
     gr.Textbox(label="Describe the reference image"),
     gr.Textbox(label="Prompts to generate images (separate with new lines)", lines=10),
-    gr.Number(2, label="shared_score_shift"),
+    gr.Number(2, label="shared_score_shift", precision=0),
     gr.Number(1.0, label="shared_score_scale"),
     gr.Number(10.0, label="guidance_scale"),
-    gr.Number(50, label="num_inference_steps"),
-    gr.Number(10, label="seed")
+    gr.Number(50, label="num_inference_steps", precision=0),
+    gr.Number(10, label="seed", precision=0)
   ],
   outputs=gr.Gallery()
 )
