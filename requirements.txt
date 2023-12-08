@@ -1,0 +1,7 @@
+diffusers
+transformers
+mediapy
+ipywidgets
+einops
+gradio
+accelerate

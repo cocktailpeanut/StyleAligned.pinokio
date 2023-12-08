@@ -1,0 +1,28 @@
+{
+  "cmds": {
+    "nvidia": "pip install torch torchvision torchaudio xformers --index-url https://download.pytorch.org/whl/cu118",
+    "amd": "pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6",
+    "default": "pip install torch torchvision torchaudio"
+  },
+  "run": [{
+    "method": "shell.run",
+    "params": {
+      "venv": "venv",
+      "message": [
+        "{{(gpu === 'nvidia' ? self.cmds.nvidia : (gpu === 'amd' ? self.cmds.amd : self.cmds.default))}}",
+        "pip install -r requirements.txt"
+      ]
+    }
+  }, {
+    "method": "input",
+    "params": {
+      "title": "Install Success",
+      "description": "Go back to the dashboard and launch the app!"
+    }
+  }, {
+    "method": "browser.open",
+    "params": {
+      "uri": "/?selected=StyleAligned"
+    }
+  }]
+}

@@ -1,0 +1,27 @@
+{
+  "daemon": true,
+  "run": [{
+    "method": "shell.run",
+    "params": {
+      "venv": "venv",
+      "message": "python app.py",
+      "env": {
+        "PYTORCH_ENABLE_MPS_FALLBACK": "1"
+      },
+      "on": [{ "event": "/http://[0-9.:]+/", "done": true }]
+    }
+  }, {
+    "method": "self.set",
+    "params": {
+      "session.json": {
+        "url": "{{input.event[0]}}"
+      }
+    }
+  }, {
+    "method": "browser.open",
+    "params": {
+      "uri": "{{self.session.url}}",
+      "target": "_blank"
+    }
+  }]
+}
