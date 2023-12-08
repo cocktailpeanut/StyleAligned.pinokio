@@ -64,7 +64,7 @@ demo = gr.Interface(
     gr.Number(2, label="shared_score_shift"),
     gr.Number(1.0, label="shared_score_scale"),
     gr.Number(10.0, label="guidance_scale"),
-    gr.Number(50 label="num_inference_steps"),
+    gr.Number(50, label="num_inference_steps"),
     gr.Number(10, label="seed")
   ],
   outputs=gr.Gallery()
