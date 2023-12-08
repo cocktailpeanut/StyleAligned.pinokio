@@ -21,6 +21,11 @@ You can install manually, or use the 1 Click installer.
 
 You can use Pinokio to install this repository on all platforms (Mac, Windows, Linux): 
 
+**1 Click Installer:** https://pinokio.computer/item?uri=https://github.com/cocktailpeanut/StyleAligned.pinokio
+
+![installer.png](installer.png)
+
+
 ## B. Manual Install
 
 First, clone the repo
