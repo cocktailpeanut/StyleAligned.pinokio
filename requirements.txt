@@ -5,3 +5,4 @@ ipywidgets
 einops
 gradio
 accelerate
+pillow
