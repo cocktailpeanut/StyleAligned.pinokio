@@ -52,8 +52,10 @@ def run(image, src_style, src_prompt, prompts, shared_score_shift, shared_score_
   g_cpu = torch.Generator(device='cpu')
   if seed > 0:
     g_cpu.manual_seed(seed)
+    latents = torch.randn(len(prompts), 4, d, d, device='cpu', generator=g_cpu, dtype=pipeline.unet.dtype,).to(device)
+  else:
+    latents = torch.randn(len(prompts), 4, d, d, device='cpu', dtype=pipeline.unet.dtype,).to(device)
 
-  latents = torch.randn(len(prompts), 4, d, d, device='cpu', generator=g_cpu, dtype=pipeline.unet.dtype,).to(device)
   latents[0] = zT
   images_a = pipeline(prompts, latents=latents, callback_on_step_end=inversion_callback, num_inference_steps=num_inference_steps, guidance_scale=guidance_scale).images
   handler.remove()
