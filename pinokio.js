@@ -17,6 +17,7 @@ module.exports = {
           href: "start.json",
           target: "_blank"
         }, {
+          default: true,
           icon: "fa-solid fa-rocket",
           text: "Open UI",
           href: (session && session.url ? session.url : "http://127.0.0.1:7860"),
@@ -24,6 +25,7 @@ module.exports = {
         }]
       } else {
         return [{
+          default: true,
           icon: "fa-solid fa-power-off",
           text: "Launch",
           href: "start.json",
@@ -32,6 +34,7 @@ module.exports = {
       }
     } else {
       return [{
+        default: true,
         icon: "fa-solid fa-plug",
         text: "Install",
         href: "install.json",
