@@ -16,7 +16,7 @@ module.exports = {
       }]
     } else if (installed) {
       if (running) {
-        let local = kernel.memory.local[path.resolve(__dirname, "start.js")]
+        let local = kernel.memory.local[path.resolve(__dirname, "start.json")]
         if (local && local.url) {
           return [{
             default: true,
@@ -33,7 +33,7 @@ module.exports = {
             default: true,
             icon: 'fa-solid fa-terminal',
             text: "Terminal",
-            href: "start.js",
+            href: "start.json",
           }]
         }
       } else {
@@ -41,7 +41,7 @@ module.exports = {
           default: true,
           icon: "fa-solid fa-power-off",
           text: "Start",
-          href: "start.js",
+          href: "start.json",
         }, {
           icon: "fa-solid fa-plug",
           text: "Update",
