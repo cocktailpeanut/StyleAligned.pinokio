@@ -1,4 +1,5 @@
 module.exports = {
+  version: "3.0",
   title: "StyleAligned",
   icon: "icon.png",
   description: "Style Aligned Image Generation via Shared Attention https://style-aligned-gen.github.io/",
@@ -37,7 +38,7 @@ module.exports = {
         default: true,
         icon: "fa-solid fa-plug",
         text: "Install",
-        href: "install.json",
+        href: "install.js",
         params: { run: true, fullscreen: true }
       }]
     }
