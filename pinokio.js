@@ -64,46 +64,5 @@ module.exports = {
         href: "install.js",
       }]
     }
-    let installed = await kernel.exists(__dirname, "venv")
-    if (installed) {
-      let running = await kernel.running(__dirname, "start.json")
-      if (running) {
-        let local = info.local("start.js")
-        if (local && local.url) {
-          return [{
-            icon: "fa-solid fa-terminal",
-            text: "Terminal",
-            href: "start.json",
-          }, {
-            default: true,
-            icon: "fa-solid fa-rocket",
-            text: "Open UI",
-            href: local.url,
-          }]
-        } else {
-          return [{
-            icon: "fa-solid fa-terminal",
-            text: "Terminal",
-            href: "start.json",
-          }]
-        }
-      } else {
-        return [{
-          default: true,
-          icon: "fa-solid fa-power-off",
-          text: "Launch",
-          href: "start.json",
-          params: { fullscreen: true, run: true }
-        }]
-      }
-    } else {
-      return [{
-        default: true,
-        icon: "fa-solid fa-plug",
-        text: "Install",
-        href: "install.js",
-        params: { run: true, fullscreen: true }
-      }]
-    }
   }
 }
