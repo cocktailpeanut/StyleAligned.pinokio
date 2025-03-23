@@ -29,8 +29,9 @@ module.exports = async (kernel) => {
       "params": {
         "venv": "venv",
         "message": [
-          "{{(gpu === 'nvidia' ? self.cmds.nvidia : ((platform !== 'darwin' && gpu === 'amd') ? self.cmds.amd : self.cmds.default))}}",
-          "pip install -r requirements.txt"
+          cmd,
+//          "{{(gpu === 'nvidia' ? self.cmds.nvidia : ((platform !== 'darwin' && gpu === 'amd') ? self.cmds.amd : self.cmds.default))}}",
+          "uv pip install -r requirements.txt"
         ]
       }
     }, {
