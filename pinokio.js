@@ -3,7 +3,7 @@ module.exports = {
   title: "StyleAligned",
   icon: "icon.png",
   description: "Style Aligned Image Generation via Shared Attention https://style-aligned-gen.github.io/",
-  menu: async (kernel) => {
+  menu: async (kernel, info) => {
     let installing = await kernel.running(__dirname, "install.js")
     let installed = await kernel.exists(__dirname, "venv")
     let running = await kernel.running(__dirname, "start.json")
@@ -17,7 +17,7 @@ module.exports = {
       }]
     } else if (installed) {
       if (running) {
-        let local = kernel.memory.local[path.resolve(__dirname, "start.json")]
+        let local = info.local("start.json")
         if (local && local.url) {
           return [{
             default: true,
